@@ -1,4 +1,4 @@
-﻿using ControleMercadoria.Models;
+﻿using ControleMercadoria.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControleMercadoria.Data

@@ -1,20 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ControleMercadoria.Services.User;
+using UserEntity = ControleMercadoria.Models.Users.User;
 
 namespace ControleMercadoria.Controllers
 
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
+        private readonly IUserService _service;
 
-        [HttpPost]
-
-        public async Task<IActionResult> CreateUser()
+        public UsersController(IUserService service)
         {
-            string[] user = { "Arthur","Raul","Pele" };
-            return Ok(user);      
+            _service = service;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody] UserEntity user)
+        {
+            var createUser = await _service.Create(user);
+            return StatusCode(201 , createUser);      
+        }
     }
 }

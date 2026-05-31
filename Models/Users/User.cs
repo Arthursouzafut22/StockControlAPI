@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ControleMercadoria.Models
+namespace ControleMercadoria.Models.Users
 {
     [Index(nameof(Email), IsUnique = true)]
     [Table("Users")]
