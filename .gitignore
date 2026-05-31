@@ -1,0 +1,17 @@
+# Build
+bin/
+obj/
+
+# Secrets e configurações sensíveis
+appsettings.Development.json
+*.user
+.env
+secrets.json
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+
+# Logs
+*.log
