@@ -1,15 +1,17 @@
-﻿using UserEntity = ControleMercadoria.Models.Users.User;
+﻿using ControleMercadoria.DTOs.User;
+using ControleMercadoria.DTOs.Users;
+//using UserEntity = ControleMercadoria.Models.Users.User;
 
 namespace ControleMercadoria.Services.User
 {
     public interface IUserService
     {
-        Task<UserEntity> FindById(int id);
-        Task<IEnumerable<UserEntity>> GetAll();
-        Task<UserEntity> Create(UserEntity user);
-        Task<UserEntity> Update(int id, UserEntity user);
-        Task Delete(int id);
-        Task<UserEntity> FindByEmail(string email);
-        Task<bool> EmailExists(string email);
+        Task<UserResponseDto> FindById(long id);
+        //Task<IEnumerable<UserResponseDto>> GetAll();
+        Task<UserResponseDto> Create(CreateUserDTO user);
+        Task<UserResponseDto> Update(long id, UpdateUserDto user);
+        //Task Delete(int id);
+        //Task<UserResponseDto> FindByEmail(string email);
+        //Task<bool> EmailExists(string email);
     }
 }

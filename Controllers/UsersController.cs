@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ControleMercadoria.DTOs.User;
+using ControleMercadoria.DTOs.Users;
+using ControleMercadoria.Models.Users;
 using ControleMercadoria.Services.User;
-using UserEntity = ControleMercadoria.Models.Users.User;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ControleMercadoria.Controllers
 
@@ -17,10 +19,39 @@ namespace ControleMercadoria.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] UserEntity user)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserDTO dto)
         {
-            var createUser = await _service.Create(user);
-            return StatusCode(201 , createUser);      
+            var user = await _service.Create(dto);
+
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            var user = await _service.FindById(id);
+
+            if (user == null)
+            {
+                return NotFound($"Usuário com o ID {id} não foi encontrado.");
+            }
+
+            return Ok(user);
+        }
+
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> UpdateUser(long id, [FromBody] UpdateUserDto dto)
+        {
+            var user = await _service.FindById(id);
+
+            if (user == null)
+            {
+                return NotFound($"Usuário com o ID {id} não foi encontrado.");
+            }
+
+            var update = await _service.Update(id, dto);
+            return CreatedAtAction(nameof(GetById), new { id = update.Id }, update);
         }
     }
 }

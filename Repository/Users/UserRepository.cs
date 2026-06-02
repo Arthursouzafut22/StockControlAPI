@@ -12,8 +12,9 @@ namespace ControleMercadoria.Repository.User
 
         public async Task<UserEntity> FindByEmail(string email)
         {
-            return await _context.Set<UserEntity>().FirstOrDefaultAsync(item => item.Email == email);
-           
+            var findEmail = await _context.Set<UserEntity>().FirstOrDefaultAsync(item => item.Email == email);
+            return findEmail;
+
         }
         public async Task<bool> EmailExists(string email) 
         {

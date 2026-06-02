@@ -20,7 +20,7 @@ namespace ControleMercadoria.Repositoy.Generic
             return item;
         }
 
-        public async Task<T> Update(int id, T item)
+        public async Task<T> Update(long id, T item)
         {
             var find = await FindById(id);
 
@@ -38,13 +38,13 @@ namespace ControleMercadoria.Repositoy.Generic
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<T?> FindById(int id)
+        public async Task<T?> FindById(long id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
             return entity ?? throw new KeyNotFoundException($"Entidade do tipo {typeof(T).Name} com id {id} não encontrada.");
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(long id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
             if (entity == null) return;
