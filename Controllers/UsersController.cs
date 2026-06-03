@@ -40,7 +40,6 @@ namespace ControleMercadoria.Controllers
         }
 
         [HttpPut("{id}")]
-
         public async Task<IActionResult> UpdateUser(long id, [FromBody] UpdateUserDto dto)
         {
             var user = await _service.FindById(id);
@@ -52,6 +51,20 @@ namespace ControleMercadoria.Controllers
 
             var update = await _service.Update(id, dto);
             return CreatedAtAction(nameof(GetById), new { id = update.Id }, update);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _service.GetAll();
+            return Ok(users);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(long id)
+        {
+            await _service.Delete(id);
+            return NoContent();
         }
     }
 }

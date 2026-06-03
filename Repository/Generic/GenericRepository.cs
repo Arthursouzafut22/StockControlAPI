@@ -41,7 +41,7 @@ namespace ControleMercadoria.Repositoy.Generic
         public async Task<T?> FindById(long id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
-            return entity ?? throw new KeyNotFoundException($"Entidade do tipo {typeof(T).Name} com id {id} não encontrada.");
+            return entity;
         }
 
         public async Task Delete(long id)

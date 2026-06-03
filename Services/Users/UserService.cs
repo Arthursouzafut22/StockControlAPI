@@ -46,13 +46,13 @@ namespace ControleMercadoria.Services.User
                 throw new KeyNotFoundException($"Usuário com id {id} não encontrado.");
 
             if (existEmail)
-                throw new InvalidOperationException("E-mail já cadastrado.");
-            
+                throw new InvalidOperationException("E-mail já cadastrado, informe outro e-mail para atualização.");
+
 
             existUser.Nome = dto.Nome;
             existUser.Email = dto.Email;
 
-             await _repository.Update(id, existUser);
+            await _repository.Update(id, existUser);
             return new UserResponseDto(existUser.Id, existUser.Nome, existUser.Email);
         }
 
@@ -66,33 +66,20 @@ namespace ControleMercadoria.Services.User
             return new UserResponseDto(existUser.Id, existUser.Nome, existUser.Email);
         }
 
-        //public async Task<IEnumerable<UserEntity>> GetAll()
-        //{
-        //    return await _repository.GetAll();
-        //}
+        public async Task<IEnumerable<UserResponseDto>> GetAll()
+        {
+            var users = await _repository.GetAll();
+            return users.Select(item => new UserResponseDto(item.Id, item.Nome, item.Email));
+        }
 
-        //public async Task Delete(int id)
-        //{
-        //    var existUser = await _repository.FindById(id);
+        public async Task Delete(long id)
+        {
+            var existUser = await _repository.FindById(id);
 
-        //    if (existUser == null)
-        //        throw new KeyNotFoundException($"Usuário com id {id} não encontrado.");
+            if (existUser == null)
+                throw new KeyNotFoundException($"Usuário com id {id} não encontrado.");
 
-        //    await _repository.Delete(id);
-        //}
-
-        //public async Task<UserEntity> FindByEmail(string email)
-        //{
-        //    var findEmail = await _repository.FindByEmail(email);
-
-        //    if (findEmail == null)
-        //        throw new KeyNotFoundException($"Usuário com id {email} não encontrado.");
-
-        //    return findEmail;
-        //}
-        //public async Task<bool> EmailExists(string email)
-        //{
-        //    return await _repository.EmailExists(email);
-        //}
+            await _repository.Delete(id);
+        }
     }
 }
