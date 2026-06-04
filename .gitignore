@@ -7,6 +7,7 @@ appsettings.Development.json
 *.user
 .env
 secrets.json
+appsettings.json
 
 # Visual Studio
 .vs/

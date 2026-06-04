@@ -5,7 +5,6 @@ namespace ControleMercadoria.Configuration
 {
     public class ExceptionMiddleware
     {
-
         private readonly RequestDelegate _next;
 
         public ExceptionMiddleware(RequestDelegate next)
@@ -27,12 +26,15 @@ namespace ControleMercadoria.Configuration
             {
                 await HandleException(context, HttpStatusCode.BadRequest, ex.Message);
             }
+            catch(UnauthorizedAccessException ex)
+            {
+                await HandleException(context, HttpStatusCode.Unauthorized, ex.Message);
+            }
             catch (Exception ex)
             {
                 await HandleException(context, HttpStatusCode.InternalServerError, "Erro interno no servidor.");
             }
         }
-
         private async Task HandleException(HttpContext context, HttpStatusCode status, string message)
         {
             context.Response.ContentType = "application/json";
