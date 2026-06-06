@@ -16,7 +16,7 @@ namespace ControleMercadoria.Services.User
             _repository = repository;
         }
 
-        public async Task<UserResponseDto> Create(CreateUserDTO dto)
+        public async Task<UserResponseDTO> Create(CreateUserDTO dto)
         {
             var existEmail = await _repository.EmailExists(dto.Email);
 
@@ -33,10 +33,10 @@ namespace ControleMercadoria.Services.User
             };
 
             await _repository.Create(user);
-            return new UserResponseDto(user.Id, user.Nome, user.Email);
+            return new UserResponseDTO(user.Id, user.Nome, user.Email);
         }
 
-        public async Task<UserResponseDto> Update(long userIdToken, UpdateUserDto dto)
+        public async Task<UserResponseDTO> Update(long userIdToken, UpdateUserDTO dto)
         {
             var existUser = await _repository.FindById(userIdToken);
             var existEmail = await _repository.EmailExists(dto.Email);
@@ -52,10 +52,10 @@ namespace ControleMercadoria.Services.User
             existUser.Email = dto.Email;
 
             await _repository.Update(userIdToken, existUser);
-            return new UserResponseDto(existUser.Id, existUser.Nome, existUser.Email);
+            return new UserResponseDTO(existUser.Id, existUser.Nome, existUser.Email);
         }
 
-        public async Task<UserResponseDto> FindById(long id, long userIdToken)
+        public async Task<UserResponseDTO> FindById(long id, long userIdToken)
         {
 
             if (id != userIdToken)
@@ -66,13 +66,13 @@ namespace ControleMercadoria.Services.User
             if (existUser == null)
                 throw new KeyNotFoundException($"Usuário com id {id} não encontrado.");
 
-            return new UserResponseDto(existUser.Id, existUser.Nome, existUser.Email);
+            return new UserResponseDTO(existUser.Id, existUser.Nome, existUser.Email);
         }
 
-        public async Task<IEnumerable<UserResponseDto>> GetAll()
+        public async Task<IEnumerable<UserResponseDTO>> GetAll()
         {
             var users = await _repository.GetAll();
-            return users.Select(item => new UserResponseDto(item.Id, item.Nome, item.Email));
+            return users.Select(item => new UserResponseDTO(item.Id, item.Nome, item.Email));
         }
 
         public async Task Delete(long id, long userIdToken)

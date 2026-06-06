@@ -1,4 +1,4 @@
 ﻿namespace ControleMercadoria.DTOs.Users
 {
-    public record UpdateUserDto(string Nome, string Email);
+    public record UpdateUserDTO(string Nome, string Email);
 }

@@ -1,5 +1,4 @@
 ﻿namespace ControleMercadoria.DTOs.Users
 {
-    public record UserResponseDto(long Id, string Nome, string Email);
-
+    public record UserResponseDTO(long Id, string Nome, string Email);
 }

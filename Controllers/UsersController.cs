@@ -39,7 +39,7 @@ namespace ControleMercadoria.Controllers
 
         [Authorize]
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDTO dto)
         {
             var userIdToken = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var user = await _service.FindById(userIdToken, userIdToken);

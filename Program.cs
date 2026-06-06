@@ -4,6 +4,9 @@ using ControleMercadoria.Repositoy.Generic;
 using ControleMercadoria.Repositoy.User;
 using ControleMercadoria.Services.Auth;
 using ControleMercadoria.Services.User;
+using ControleMercadoria.Validators.Auth;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.AddJwtConfiguration();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginDTOValidator>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();

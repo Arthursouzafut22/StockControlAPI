@@ -5,10 +5,10 @@ namespace ControleMercadoria.Services.User
 {
     public interface IUserService
     {
-        Task<UserResponseDto> FindById(long id, long userIdToken);
-        Task<IEnumerable<UserResponseDto>> GetAll();
-        Task<UserResponseDto> Create(CreateUserDTO user);
-        Task<UserResponseDto> Update(long userIdToken, UpdateUserDto user);
+        Task<UserResponseDTO> FindById(long id, long userIdToken);
+        Task<IEnumerable<UserResponseDTO>> GetAll();
+        Task<UserResponseDTO> Create(CreateUserDTO user);
+        Task<UserResponseDTO> Update(long userIdToken, UpdateUserDTO user);
         Task Delete(long id, long userIdToken);
     }
 }
