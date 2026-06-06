@@ -9,7 +9,6 @@ namespace ControleMercadoria.Services.Auth
     public class TokenService : ITokenService
     {
         private readonly string _secretKey;
-
         public TokenService(IConfiguration configuration)
         {
             _secretKey = configuration["Jwt:SecretKey"];

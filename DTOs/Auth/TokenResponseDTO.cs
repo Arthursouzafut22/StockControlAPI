@@ -1,4 +1,4 @@
 ﻿namespace ControleMercadoria.DTOs.Auth
 {
-    public record TokenResponseDTO(string Token);
+    public record TokenResponseDTO(string Token, DateTime Expiration);
 }

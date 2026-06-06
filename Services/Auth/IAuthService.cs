@@ -4,7 +4,7 @@ namespace ControleMercadoria.Services.Auth
 {
     public interface IAuthService
     {
-        Task<string> Login(LoginDTO dto);
+        Task<TokenResponseDTO> Login(LoginDTO dto);
         bool ToCheckSenha(string senha, string hashFromBank);
     }
 }

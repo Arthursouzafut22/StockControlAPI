@@ -14,9 +14,8 @@ namespace ControleMercadoria.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
-          var login =  await _service.Login(dto);
-          return Ok(new { Acess_token = login });
+            var token = await _service.Login(dto);
+            return Ok(new { Acess_token = token });
         }
-
     }
 }

@@ -2,7 +2,9 @@
 using ControleMercadoria.DTOs.Users;
 using ControleMercadoria.Models.Users;
 using ControleMercadoria.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ControleMercadoria.Controllers
 
@@ -12,7 +14,6 @@ namespace ControleMercadoria.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _service;
-
         public UsersController(IUserService service)
         {
             _service = service;
@@ -26,30 +27,29 @@ namespace ControleMercadoria.Controllers
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
-            var user = await _service.FindById(id);
-
-            if (user == null)
-            {
-                return NotFound($"Usuário com o ID {id} não foi encontrado.");
-            }
+            var userIdToken = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var user = await _service.FindById(id, userIdToken);
 
             return Ok(user);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(long id, [FromBody] UpdateUserDto dto)
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
         {
-            var user = await _service.FindById(id);
+            var userIdToken = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var user = await _service.FindById(userIdToken, userIdToken);
 
             if (user == null)
             {
-                return NotFound($"Usuário com o ID {id} não foi encontrado.");
+                return NotFound($"Usuário com o ID {userIdToken} não foi encontrado.");
             }
 
-            var update = await _service.Update(id, dto);
+            var update = await _service.Update(userIdToken, dto);
             return CreatedAtAction(nameof(GetById), new { id = update.Id }, update);
         }
 
@@ -60,10 +60,12 @@ namespace ControleMercadoria.Controllers
             return Ok(users);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(long id)
         {
-            await _service.Delete(id);
+            var userIdToken = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            await _service.Delete(id, userIdToken);
             return NoContent();
         }
     }
