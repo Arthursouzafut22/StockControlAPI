@@ -1,10 +1,11 @@
-using ControleMercadoria.Configuration;
-using ControleMercadoria.Repository.User;
-using ControleMercadoria.Repositoy.Generic;
-using ControleMercadoria.Repositoy.User;
-using ControleMercadoria.Services.Auth;
-using ControleMercadoria.Services.User;
-using ControleMercadoria.Validators.Auth;
+using ControleMercadoria.API.Configuration;
+using ControleMercadoria.Application.Services.Auth;
+using ControleMercadoria.Application.Services.Products;
+using ControleMercadoria.Application.Services.Users;
+using ControleMercadoria.Core.Validators.Auth;
+using ControleMercadoria.Infrastructure.Repository.Generic;
+using ControleMercadoria.Infrastructure.Repository.Products;
+using ControleMercadoria.Infrastructure.Repository.Users;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 
@@ -26,6 +27,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var secretKey = builder.Configuration["Jwt:SecretKey"];
 

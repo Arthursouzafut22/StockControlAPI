@@ -1,0 +1,21 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using ControleMercadoria.Core.DTOs.Auth;
+using ControleMercadoria.Application.Services.Auth;
+
+namespace ControleMercadoria.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
+    {
+        private readonly IAuthService _service;
+        public AuthController(IAuthService service) => _service = service;
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO dto)
+        {
+            var token = await _service.Login(dto);
+            return Ok(new { Acess_token = token });
+        }
+    }
+}
