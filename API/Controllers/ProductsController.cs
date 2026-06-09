@@ -1,5 +1,6 @@
 ﻿using ControleMercadoria.Application.Services.Products;
 using ControleMercadoria.Core.DTOs.Products;
+using ControleMercadoria.Core.Models.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -28,6 +29,16 @@ namespace ControleMercadoria.API.Controllers
                 message = "Produto cadastrado com sucesso.",
                 Data = createProduct
             });
+        }
+
+        [Authorize]
+        [HttpPut("{productId}")]
+        public async Task<IActionResult> UpdateProduct(long productId, [FromBody] UpdateProductDTO dto)
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var update = await _service.Update(userId, productId, dto);
+
+            return StatusCode(201, new { message = "Produto atualizado com sucesso!", Data = update });
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ControleMercadoria.Core.DTOs.Products
 {
-    public class UpdateProductDTO(
+    public record UpdateProductDTO(
     string Name,
     string Category,
     string Description,

@@ -7,7 +7,7 @@ namespace ControleMercadoria.Application.Services.Products
         //Task<IEnumerable<ProductResponseDTO>> GetAll();
         //Task<ProductResponseDTO> FindById(long id, long userIdToken);
         Task<ProductResponseDTO> Create(CreateProductDTO product, long userId);
-        //Task<UpdateProductDTO> Update(long userIdToken, UpdateProductDTO product);
+        Task<ProductResponseDTO> Update(long userIdToken, long productId, UpdateProductDTO product);
         //Task Delete(long id, long userIdToken);
     }
 }

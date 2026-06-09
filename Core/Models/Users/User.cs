@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ControleMercadoria.Core.Models.Products;
+using System.Text.Json.Serialization;
 
 namespace ControleMercadoria.Core.Models.Users
 {
@@ -27,6 +28,8 @@ namespace ControleMercadoria.Core.Models.Users
 
         [Required]
         public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
+
+        [JsonIgnore]
         public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }
