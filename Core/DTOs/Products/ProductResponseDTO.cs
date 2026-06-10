@@ -1,6 +1,6 @@
 ﻿namespace ControleMercadoria.Core.DTOs.Products
 {
-    public class ProductResponseDTO(
+    public record ProductResponseDTO(
         long Id,
         string Name,
         string Category,
