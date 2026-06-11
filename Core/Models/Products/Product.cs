@@ -38,6 +38,6 @@ namespace ControleMercadoria.Core.Models.Products
         public long UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }
