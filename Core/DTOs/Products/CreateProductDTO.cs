@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ControleMercadoria.Core.DTOs.Products
+﻿namespace ControleMercadoria.Core.DTOs.Products
 {
-    public record CreateProductDTO(
+    public record CreateProductDTO
+ (
     string Name,
     string Category,
     string Description,

@@ -1,11 +1,13 @@
 using ControleMercadoria.API.Configuration;
 using ControleMercadoria.Application.Services.Auth;
+using ControleMercadoria.Application.Services.Movements;
 using ControleMercadoria.Application.Services.Products;
 using ControleMercadoria.Application.Services.Users;
 using ControleMercadoria.Core.Validators.Auth;
 using ControleMercadoria.Infrastructure.Repository.Generic;
 using ControleMercadoria.Infrastructure.Repository.Products;
 using ControleMercadoria.Infrastructure.Repository.Users;
+using ControleMercadoria.Infrastructure.Repository.Movements;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 
@@ -29,6 +31,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IMovementsRepository, MovementsRepository>();
+builder.Services.AddScoped<IMovementService, MovementService>();
 
 var secretKey = builder.Configuration["Jwt:SecretKey"];
 

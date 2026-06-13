@@ -20,8 +20,8 @@ namespace ControleMercadoria.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductDTO dto)
         {
-            var userIdToken = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var createProduct = await _service.Create(dto, userIdToken);
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var createProduct = await _service.Create(dto, userId);
 
             return StatusCode(201, new
             {
