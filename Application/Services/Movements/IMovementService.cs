@@ -4,6 +4,7 @@ namespace ControleMercadoria.Application.Services.Movements
 {
     public interface IMovementService
     {
-        Task<MovementsResponseDTO> Create(long userId, CreateEntryMovementDTO dto);
+        Task<MovementsResponseDTO> CreateEntryMovement(long userId, CreateEntryMovementDTO dto);
+        Task<IEnumerable<MovementsResponseDTO>> GetEntryMovements(long userId);
     }
 }

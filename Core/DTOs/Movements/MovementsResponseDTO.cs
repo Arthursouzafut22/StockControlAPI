@@ -1,5 +1,4 @@
 ﻿using ControleMercadoria.Core.Enums;
-using ControleMercadoria.Core.Models.Products;
 
 namespace ControleMercadoria.Core.DTOs.Movements
 {

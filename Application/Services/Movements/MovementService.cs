@@ -19,7 +19,7 @@ namespace ControleMercadoria.Application.Services.Movements
             _productRepository = productRepository;
         }
 
-        public async Task<MovementsResponseDTO> Create(long userId, CreateEntryMovementDTO dto)
+        public async Task<MovementsResponseDTO> CreateEntryMovement(long userId, CreateEntryMovementDTO dto)
         {
             var product = await _productRepository.FindById(dto.ProductId);
 
@@ -56,6 +56,27 @@ namespace ControleMercadoria.Application.Services.Movements
                 createdMovement.TotalValue,
                 createdMovement.Observation,
                 createdMovement.CreatedAt
+            );
+        }
+
+        public async Task<IEnumerable<MovementsResponseDTO>> GetEntryMovements(long userId)
+        {
+            var movements = (await _repository.GetAllMovementsWithProduct())
+                .Where(x => x.UserId == userId);
+
+            return movements.Select(x =>
+                new MovementsResponseDTO(
+                    x.Id,
+                    x.ProductId,
+                    x.Product.Name,
+                    x.UserId,
+                    x.Type,
+                    x.Amount,
+                    x.UnitValue,
+                    x.TotalValue,
+                    x.Observation,
+                    x.CreatedAt
+                )
             );
         }
     }

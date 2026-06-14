@@ -5,5 +5,6 @@ namespace ControleMercadoria.Infrastructure.Repository.Movements
 {
     public interface IMovementsRepository : IGenericRepository<Movement>
     {
+        Task<IEnumerable<Movement>> GetAllMovementsWithProduct();
     }
 }

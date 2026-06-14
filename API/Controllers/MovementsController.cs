@@ -17,12 +17,23 @@ namespace ControleMercadoria.API.Controllers
         }
 
         [Authorize]
-        [HttpPost("entrada")]
+        [HttpPost("entradas")]
         public async Task<IActionResult> RegisterEntry([FromBody] CreateEntryMovementDTO dto)
         {
-            var userId= long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var teste = await _service.Create(userId, dto);
-            return Ok(teste);
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var movement = await _service.CreateEntryMovement(userId, dto);
+
+            return StatusCode(201, new { message = "Movimentação registrada!", Data = movement });
+        }
+
+        [Authorize]
+        [HttpGet("entradas")]
+        public async Task<IActionResult> GetEntryMovements()
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var movements = await _service.GetEntryMovements(userId);
+
+            return Ok(movements);
         }
     }
 }

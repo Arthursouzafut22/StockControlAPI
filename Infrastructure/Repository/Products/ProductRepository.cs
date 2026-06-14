@@ -6,6 +6,6 @@ namespace ControleMercadoria.Infrastructure.Repository.Products
 {
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
-        public ProductRepository(AppDbContext context): base(context) { }
+        public ProductRepository(AppDbContext context) : base(context) { }
     }
 }
