@@ -6,5 +6,7 @@ namespace ControleMercadoria.Application.Services.Movements
     {
         Task<MovementsResponseDTO> CreateEntryMovement(long userId, CreateEntryMovementDTO dto);
         Task<IEnumerable<MovementsResponseDTO>> GetEntryMovements(long userId);
+        Task<MovementsResponseDTO> CreateExitMovement(long userId, CreateExitMovementDTO dto);
+        Task<IEnumerable<MovementsResponseDTO>> GetExitMovements(long userId);
     }
 }

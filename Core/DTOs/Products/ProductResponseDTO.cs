@@ -1,13 +1,30 @@
-﻿namespace ControleMercadoria.Core.DTOs.Products
+﻿using System.Text.Json.Serialization;
+
+namespace ControleMercadoria.Core.DTOs.Products
 {
     public record ProductResponseDTO(
+        [property: JsonPropertyName("id")]
         long Id,
+
+        [property: JsonPropertyName("nome")]
         string Name,
+
+        [property: JsonPropertyName("categoria")]
         string Category,
+
+        [property: JsonPropertyName("descricao")]
         string Description,
+
+        [property: JsonPropertyName("preco_custo")]
         decimal PriceCost,
+
+        [property: JsonPropertyName("preco_venda")]
         decimal SalePrice,
+
+        [property: JsonPropertyName("quantidade_estoque")]
         int StockQuantity,
+
+        [property: JsonPropertyName("usuario_id")]
         long UserId
     );
 }

@@ -2,7 +2,7 @@
 
 namespace ControleMercadoria.Core.DTOs.Movements
 {
-    public record CreateEntryMovementDTO(
+    public record CreateExitMovementDTO(
         [property: JsonPropertyName("produto_id")]
         long ProductId,
 
@@ -14,5 +14,7 @@ namespace ControleMercadoria.Core.DTOs.Movements
 
         [property: JsonPropertyName("observacao")]
         string? Observation
+
     );
+
 }

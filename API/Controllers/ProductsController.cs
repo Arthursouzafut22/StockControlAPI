@@ -16,6 +16,29 @@ namespace ControleMercadoria.API.Controllers
             _service = service;
         }
 
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var products = await _service.GetAll(userId);
+
+            return Ok(products);
+        }
+
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(long id)
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var product = await _service.FindById(id, userId);
+
+            return Ok(product);
+        }
+
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductDTO dto)
@@ -30,6 +53,7 @@ namespace ControleMercadoria.API.Controllers
             });
         }
 
+
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(long id, [FromBody] UpdateProductDTO dto)
@@ -40,25 +64,6 @@ namespace ControleMercadoria.API.Controllers
             return StatusCode(201, new { message = "Produto atualizado com sucesso!", Data = update });
         }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> GetProducts()
-        {
-            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var products = await _service.GetAll(userId);
-
-            return Ok(products);
-        }
-
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductById(long id)
-        {
-            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var product = await _service.FindById(id, userId);
-
-            return Ok(product);
-        }
 
         [Authorize]
         [HttpDelete("{id}")]
