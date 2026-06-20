@@ -62,7 +62,7 @@ namespace ControleMercadoria.Application.Services.Movements
         public async Task<IEnumerable<MovementsResponseDTO>> GetEntryMovements(long userId)
         {
             var movements = (await _repository.GetAllMovementsWithProduct())
-                .Where(x => x.UserId == userId);
+                .Where(x => x.UserId == userId && x.Type == MovementType.ENTRADA);
 
             return movements.Select(x =>
                 new MovementsResponseDTO(

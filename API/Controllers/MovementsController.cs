@@ -11,11 +11,11 @@ namespace ControleMercadoria.API.Controllers
     public class MovementsController : ControllerBase
     {
         private readonly IMovementService _service;
+
         public MovementsController(IMovementService service)
         {
             _service = service;
         }
-
 
         [Authorize]
         [HttpGet("entradas")]
@@ -27,7 +27,6 @@ namespace ControleMercadoria.API.Controllers
             return Ok(movements);
         }
 
-
         [Authorize]
         [HttpPost("entradas")]
         public async Task<IActionResult> RegisterEntry([FromBody] CreateEntryMovementDTO dto)
@@ -38,7 +37,6 @@ namespace ControleMercadoria.API.Controllers
             return StatusCode(201, new { message = "Movimentação de entrada registrada!", Data = movement });
         }
 
-
         [Authorize]
         [HttpGet("saidas")]
         public async Task<IActionResult> GetExitMovements()
@@ -48,7 +46,6 @@ namespace ControleMercadoria.API.Controllers
 
             return Ok(movements);
         }
-
 
         [Authorize]
         [HttpPost("saidas")]

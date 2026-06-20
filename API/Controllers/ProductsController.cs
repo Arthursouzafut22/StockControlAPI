@@ -27,7 +27,6 @@ namespace ControleMercadoria.API.Controllers
             return Ok(products);
         }
 
-
         [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(long id)
@@ -37,7 +36,6 @@ namespace ControleMercadoria.API.Controllers
 
             return Ok(product);
         }
-
 
         [Authorize]
         [HttpPost]
@@ -53,7 +51,6 @@ namespace ControleMercadoria.API.Controllers
             });
         }
 
-
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(long id, [FromBody] UpdateProductDTO dto)
@@ -63,7 +60,6 @@ namespace ControleMercadoria.API.Controllers
 
             return StatusCode(201, new { message = "Produto atualizado com sucesso!", Data = update });
         }
-
 
         [Authorize]
         [HttpDelete("{id}")]
