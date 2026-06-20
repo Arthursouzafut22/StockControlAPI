@@ -33,5 +33,13 @@ namespace ControleMercadoria.Application.Services.Reports
                 isProfitable
             );
         }
+
+        public async Task<InventoryReportsResponseDTO> GetInventoryReports(long userId)
+        {
+            var products = await _serviceProduct.GetAll(userId);
+            var totalStockValue = products.Select(x => x.PriceCost * x.StockQuantity);
+
+            return new InventoryReportsResponseDTO(totalStockValue.Sum());
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace ControleMercadoria.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     public class MovementsController : ControllerBase
     {
         private readonly IMovementService _service;
@@ -55,6 +55,15 @@ namespace ControleMercadoria.API.Controllers
             var movementExit = await _service.CreateExitMovement(userId, dto);
 
             return StatusCode(201, new { message = "Movimentação de saida registrada!", Data = movementExit });
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMovement(long id)
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            await _service.DeleteMovement(id, userId);
+            return NoContent();
         }
     }
 }

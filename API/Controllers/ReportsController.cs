@@ -6,7 +6,7 @@ using System.Security.Claims;
 namespace ControleMercadoria.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     public class ReportsController : ControllerBase
     {
         private readonly IReportsService _service;
@@ -29,7 +29,9 @@ namespace ControleMercadoria.API.Controllers
         [HttpGet("estoque")]
         public async Task<IActionResult> GetInventoryReports()
         {
-            return Ok();
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var inventory = await _service.GetInventoryReports(userId);
+            return Ok(inventory);
         }
 
 

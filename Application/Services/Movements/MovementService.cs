@@ -147,5 +147,18 @@ namespace ControleMercadoria.Application.Services.Movements
                 )
             );
         }
+
+        public async Task DeleteMovement(long id, long userId)
+        {
+            var movement = await _repository.FindById(id);
+
+            if (movement?.UserId != userId)
+                throw new UnauthorizedAccessException("Você não tem permissão para excluir este movimento.");
+
+            if (movement == null)
+                throw new KeyNotFoundException("Movimento não encontrado");
+
+            await _repository.Delete(id);
+        }
     }
 }

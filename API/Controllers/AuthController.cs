@@ -5,7 +5,7 @@ using ControleMercadoria.Application.Services.Auth;
 namespace ControleMercadoria.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;

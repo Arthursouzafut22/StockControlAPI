@@ -5,5 +5,6 @@ namespace ControleMercadoria.Application.Services.Reports
     public interface IReportsService
     {
         Task<SummaryReportsResponseDTO> GetSummaryReport(long userId);
+        Task<InventoryReportsResponseDTO> GetInventoryReports(long userId);
     }
 }
