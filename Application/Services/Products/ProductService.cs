@@ -36,6 +36,7 @@ namespace ControleMercadoria.Application.Services.Products
                 createdProduct.PriceCost,
                 createdProduct.SalePrice,
                 createdProduct.StockQuantity,
+                createdProduct.Profit,
                 createdProduct.UserId
             );
         }
@@ -68,6 +69,7 @@ namespace ControleMercadoria.Application.Services.Products
                 update.PriceCost,
                 update.SalePrice,
                 update.StockQuantity,
+                update.Profit,
                 update.UserId
             );
         }
@@ -85,6 +87,7 @@ namespace ControleMercadoria.Application.Services.Products
                     product.PriceCost,
                     product.SalePrice,
                     product.StockQuantity,
+                    product.Profit,
                     product.UserId
                 )
             );
@@ -108,6 +111,7 @@ namespace ControleMercadoria.Application.Services.Products
                 product.PriceCost,
                 product.SalePrice,
                 product.StockQuantity,
+                product.Profit,
                 product.UserId
             );
         }

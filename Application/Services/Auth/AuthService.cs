@@ -29,7 +29,7 @@ namespace ControleMercadoria.Application.Services.Auth
 
             var token = _token.GenerateToken(user);
 
-            return new TokenResponseDTO(token, DateTime.UtcNow.AddHours(2));
+            return new TokenResponseDTO(token, DateTime.UtcNow.AddHours(5));
         }
         public bool ToCheckSenha(string senha, string hashFromBank)
         {

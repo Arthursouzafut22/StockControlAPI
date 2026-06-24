@@ -24,6 +24,9 @@ namespace ControleMercadoria.Core.DTOs.Products
         [property: JsonPropertyName("quantidade_estoque")]
         int StockQuantity,
 
+        [property: JsonPropertyName("lucro")]
+        decimal Profit,
+
         [property: JsonPropertyName("usuario_id")]
         long UserId
     );

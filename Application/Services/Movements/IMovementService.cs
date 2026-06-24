@@ -8,6 +8,7 @@ namespace ControleMercadoria.Application.Services.Movements
         Task<IEnumerable<MovementsResponseDTO>> GetEntryMovements(long userId);
         Task<MovementsResponseDTO> CreateExitMovement(long userId, CreateExitMovementDTO dto);
         Task<IEnumerable<MovementsResponseDTO>> GetExitMovements(long userId);
-        Task DeleteMovement(long id, long userId);
+        Task<IEnumerable<MovementsResponseDTO>> FindByIdMovements(long id, long userId);
+        Task UpdateMovement(long id, long userId, long productId, UpdateMovementsDTO dto);
     }
 }

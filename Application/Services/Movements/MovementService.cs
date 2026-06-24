@@ -148,17 +148,70 @@ namespace ControleMercadoria.Application.Services.Movements
             );
         }
 
-        public async Task DeleteMovement(long id, long userId)
+        public async Task<IEnumerable<MovementsResponseDTO>> FindByIdMovements(long id, long userId)
+        {
+            var movements = (await _repository.GetAllMovementsWithProduct())
+                .Where(x => x.Id == id && x.UserId == userId);
+
+            return movements.Select(x =>
+                new MovementsResponseDTO(
+                    x.Id,
+                    x.ProductId,
+                    x.Product.Name,
+                    x.UserId,
+                    x.Type,
+                    x.Amount,
+                    x.UnitValue,
+                    x.TotalValue,
+                    x.Observation,
+                    x.CreatedAt
+                )
+            );
+        }
+
+        public async Task UpdateMovement(long id, long userId, long productId, UpdateMovementsDTO dto)
         {
             var movement = await _repository.FindById(id);
-
-            if (movement?.UserId != userId)
-                throw new UnauthorizedAccessException("Você não tem permissão para excluir este movimento.");
+            var product = await _productRepository.FindById(productId);
 
             if (movement == null)
-                throw new KeyNotFoundException("Movimento não encontrado");
+                throw new KeyNotFoundException(
+                    "Movimento não encontrado.");
 
-            await _repository.Delete(id);
+            if(product == null)
+                throw new KeyNotFoundException(
+                    "Produto não encontrado.");
+
+            if (movement.UserId != userId)
+                throw new UnauthorizedAccessException(
+                    "Você não tem permissão para editar este movimento.");
+
+
+            if(movement.Type == MovementType.ENTRADA)
+            {
+                var quantidadeAnteriorEntrada = product!.StockQuantity - movement.Amount;
+                var novaQuantidadeEntrada = quantidadeAnteriorEntrada += dto.Amount;
+                product.StockQuantity = novaQuantidadeEntrada; 
+            }
+
+
+            if (movement.Type == MovementType.SAIDA)
+            {
+                var quantidadeAnteriorSaida = product!.StockQuantity + movement.Amount;
+
+                if (dto.Amount > quantidadeAnteriorSaida)
+                    throw new InvalidOperationException
+                        ("Quantidade informada maior que a quantidade do estoque atual.");
+
+                var novaQuantidadeSaida = quantidadeAnteriorSaida -= dto.Amount; 
+                product.StockQuantity = novaQuantidadeSaida;
+            }
+
+            movement.Amount = dto.Amount;
+            movement.UnitValue = dto.UnitValue;
+            movement.Observation = dto.Observation;
+            await _repository.Update(movement.Id, movement);
+           
         }
     }
 }

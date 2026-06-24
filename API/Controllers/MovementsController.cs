@@ -58,12 +58,21 @@ namespace ControleMercadoria.API.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMovement(long id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdMovements(long id)
         {
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            await _service.DeleteMovement(id, userId);
-            return NoContent();
+            var movements = await _service.FindByIdMovements(id, userId);
+            return Ok(movements);
+        }
+
+        [Authorize]
+        [HttpPut("{id}/{productId}")]
+        public async Task<IActionResult> UpdateMovement(long id, long productId, [FromBody] UpdateMovementsDTO dto)
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            await _service.UpdateMovement(id, userId, productId, dto);
+            return Ok();
         }
     }
 }

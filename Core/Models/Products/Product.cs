@@ -31,6 +31,9 @@ namespace ControleMercadoria.Core.Models.Products
         [Required]
         public int StockQuantity { get; set; } = 0;
 
+        [NotMapped]
+        public decimal Profit => PriceCost - SalePrice;
+
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
