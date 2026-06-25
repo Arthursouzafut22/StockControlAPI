@@ -1,6 +1,5 @@
 ﻿using ControleMercadoria.Application.Services.Users;
 using ControleMercadoria.Core.DTOs.Users;
-using ControleMercadoria.Core.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -9,7 +8,7 @@ namespace ControleMercadoria.API.Controllers
 
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("v1/usuarios")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _service;

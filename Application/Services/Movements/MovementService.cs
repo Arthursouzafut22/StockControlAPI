@@ -189,27 +189,29 @@ namespace ControleMercadoria.Application.Services.Movements
 
             if(movement.Type == MovementType.ENTRADA)
             {
-                var quantidadeAnteriorEntrada = product!.StockQuantity - movement.Amount;
-                var novaQuantidadeEntrada = quantidadeAnteriorEntrada += dto.Amount;
-                product.StockQuantity = novaQuantidadeEntrada; 
+                var previousQuantityEntry = product!.StockQuantity - movement.Amount;
+                var newInputQuantity = previousQuantityEntry += dto.Amount;
+                product.StockQuantity = newInputQuantity; 
             }
 
 
             if (movement.Type == MovementType.SAIDA)
             {
-                var quantidadeAnteriorSaida = product!.StockQuantity + movement.Amount;
+                var previousOutflowQuantity = product!.StockQuantity + movement.Amount;
 
-                if (dto.Amount > quantidadeAnteriorSaida)
+                if (dto.Amount > previousOutflowQuantity)
                     throw new InvalidOperationException
                         ("Quantidade informada maior que a quantidade do estoque atual.");
 
-                var novaQuantidadeSaida = quantidadeAnteriorSaida -= dto.Amount; 
-                product.StockQuantity = novaQuantidadeSaida;
+                var newOutputQuantity = previousOutflowQuantity -= dto.Amount; 
+                product.StockQuantity = newOutputQuantity;
             }
 
             movement.Amount = dto.Amount;
             movement.UnitValue = dto.UnitValue;
             movement.Observation = dto.Observation;
+
+            await _productRepository.Update(product.Id, product);
             await _repository.Update(movement.Id, movement);
            
         }

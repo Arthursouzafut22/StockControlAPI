@@ -18,7 +18,27 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.TagActionsBy(api =>
+    {
+        var controller = api.ActionDescriptor.RouteValues["controller"];
+
+        return controller switch
+        {
+            "Products" => new[] { "Produtos" },
+            "Movements" => new[] { "Movimentações" },
+            "Reports" => new[] { "Relatórios" },
+            "Auth" => new[] { "Autenticação" },
+            "Users" => new[] { "Usuários " },
+            _ => new[] { controller! }
+        };
+    });
+});
+
+
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.AddJwtConfiguration();
 

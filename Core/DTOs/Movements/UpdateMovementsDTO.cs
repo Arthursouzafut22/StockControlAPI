@@ -4,9 +4,6 @@ namespace ControleMercadoria.Core.DTOs.Movements
 {
     public record UpdateMovementsDTO
         (
-        //[property: JsonPropertyName("produto_id")]
-        //long ProductId,
-
         [property: JsonPropertyName("quantidade")]
         int Amount,
 

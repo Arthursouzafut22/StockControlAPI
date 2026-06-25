@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace ControleMercadoria.API.Controllers
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("v1/movimentacoes")]
     public class MovementsController : ControllerBase
     {
         private readonly IMovementService _service;
@@ -68,7 +68,8 @@ namespace ControleMercadoria.API.Controllers
 
         [Authorize]
         [HttpPut("{id}/{productId}")]
-        public async Task<IActionResult> UpdateMovement(long id, long productId, [FromBody] UpdateMovementsDTO dto)
+        public async Task<IActionResult> UpdateMovement(long id, long productId, 
+            [FromBody] UpdateMovementsDTO dto)
         {
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             await _service.UpdateMovement(id, userId, productId, dto);

@@ -6,7 +6,7 @@ using System.Security.Claims;
 namespace ControleMercadoria.API.Controllers
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("v1/relatorios")]
     public class ReportsController : ControllerBase
     {
         private readonly IReportsService _service;
