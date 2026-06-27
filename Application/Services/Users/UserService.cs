@@ -34,22 +34,27 @@ namespace ControleMercadoria.Application.Services.Users
             return new UserResponseDTO(user.Id, user.Nome, user.Email);
         }
 
-        public async Task<UserResponseDTO> Update(long userIdToken, UpdateUserDTO dto)
+        public async Task<UserResponseDTO> Update(long id, long userId, UpdateUserDTO dto)
         {
-            var existUser = await _repository.FindById(userIdToken);
+            var existUser = await _repository.FindById(id);
             var existEmail = await _repository.EmailExists(dto.Email);
 
+            if (userId != id)
+                throw new UnauthorizedAccessException
+                    ("Você não tem permissão para editar esse recurso.");
+
             if (existUser == null)
-                throw new KeyNotFoundException($"Usuário com id {userIdToken} não encontrado.");
+                throw new KeyNotFoundException($"Usuário com id {userId} não encontrado.");
 
             if (existEmail)
-                throw new InvalidOperationException("E-mail já cadastrado, informe outro e-mail para atualização.");
+                throw new InvalidOperationException
+                    ("E-mail já cadastrado, informe outro e-mail para atualização.");
 
 
             existUser.Nome = dto.Nome;
             existUser.Email = dto.Email;
 
-            await _repository.Update(userIdToken, existUser);
+            await _repository.Update(userId, existUser);
             return new UserResponseDTO(existUser.Id, existUser.Nome, existUser.Email);
         }
 
@@ -69,7 +74,7 @@ namespace ControleMercadoria.Application.Services.Users
         public async Task Delete(long id, long userIdToken)
         {
             if (id != userIdToken)
-                throw new UnauthorizedAccessException("Você não tem permissão para acessar este recurso.");
+                throw new UnauthorizedAccessException("Você não tem permissão para deletar este recurso.");
 
             var existUser = await _repository.FindById(id);
 

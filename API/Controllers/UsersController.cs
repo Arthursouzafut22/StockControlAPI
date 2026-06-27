@@ -22,7 +22,11 @@ namespace ControleMercadoria.API.Controllers
         {
             var user = await _service.Create(dto);
 
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, new
+            {
+                message = "Usuário cadastrado com sucesso!",
+                data = user
+            });
         }
 
         [Authorize]
@@ -36,19 +40,17 @@ namespace ControleMercadoria.API.Controllers
         }
 
         [Authorize]
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDTO dto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(long id, [FromBody] UpdateUserDTO dto)
         {
-            var userIdToken = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var user = await _service.FindById(userIdToken, userIdToken);
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var update = await _service.Update(id, userId, dto);
 
-            if (user == null)
+            return Ok(new
             {
-                return NotFound($"Usuário com o ID {userIdToken} não foi encontrado.");
-            }
-
-            var update = await _service.Update(userIdToken, dto);
-            return CreatedAtAction(nameof(GetById), new { id = update.Id }, update);
+                message = "Usuário atualizado com sucesso!",
+                user = update
+            });
         }
 
         [Authorize]
