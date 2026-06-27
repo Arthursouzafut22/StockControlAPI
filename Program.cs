@@ -11,6 +11,7 @@ using ControleMercadoria.Infrastructure.Repository.Products;
 using ControleMercadoria.Infrastructure.Repository.Users;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -32,9 +32,24 @@ builder.Services.AddSwaggerGen(c =>
             "Movements" => new[] { "Movimentações" },
             "Reports" => new[] { "Relatórios" },
             "Auth" => new[] { "Autenticação" },
-            "Users" => new[] { "Usuários " },
+            "Users" => new[] { "Usuários" },
             _ => new[] { controller! }
         };
+    });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Informe o token JWT."
+    });
+
+    c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
     });
 });
 
@@ -68,11 +83,8 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseCors();
