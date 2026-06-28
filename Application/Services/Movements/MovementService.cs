@@ -1,6 +1,7 @@
 ﻿using ControleMercadoria.Core.DTOs.Movements;
 using ControleMercadoria.Core.Enums;
 using ControleMercadoria.Core.Models.Movements;
+using ControleMercadoria.Core.Models.Users;
 using ControleMercadoria.Infrastructure.Repository.Movements;
 using ControleMercadoria.Infrastructure.Repository.Products;
 
@@ -214,6 +215,27 @@ namespace ControleMercadoria.Application.Services.Movements
             await _productRepository.Update(product.Id, product);
             await _repository.Update(movement.Id, movement);
            
+        }
+
+        public async Task<IEnumerable<MovementsResponseDTO>> GetAll(long userId)
+        {
+            var movements = (await _repository.GetAllMovementsWithProduct())
+                .Where(x => x.UserId == userId);
+
+            return movements.Select(x =>
+                new MovementsResponseDTO(
+                    x.Id,
+                    x.ProductId,
+                    x.Product.Name,
+                    x.UserId,
+                    x.Type,
+                    x.Amount,
+                    x.UnitValue,
+                    x.TotalValue,
+                    x.Observation,
+                    x.CreatedAt
+                )
+            );
         }
     }
 }

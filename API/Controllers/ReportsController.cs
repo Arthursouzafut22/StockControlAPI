@@ -34,6 +34,14 @@ namespace ControleMercadoria.API.Controllers
             return Ok(inventory);
         }
 
+        [Authorize]
+        [HttpGet("exportar-pdf")]
+        public async Task<IActionResult> GeneratePDFReport()
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var pdf = await _service.GeneratePdf(userId);
+            return File(pdf, "application/pdf", "relatorio.pdf");
+        }
 
     }
 }

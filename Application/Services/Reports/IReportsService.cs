@@ -6,5 +6,6 @@ namespace ControleMercadoria.Application.Services.Reports
     {
         Task<SummaryReportsResponseDTO> GetSummaryReport(long userId);
         Task<InventoryReportsResponseDTO> GetInventoryReports(long userId);
+        Task<byte[]> GeneratePdf(long userId);
     }
 }

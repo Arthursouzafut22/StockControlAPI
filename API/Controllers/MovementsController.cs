@@ -18,6 +18,16 @@ namespace ControleMercadoria.API.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetAllMovements()
+        {
+            var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var movements = await _service.GetAll(userId);
+
+            return Ok(movements);
+        }
+
+        [Authorize]
         [HttpGet("entradas")]
         public async Task<IActionResult> GetEntryMovements()
         {
