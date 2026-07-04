@@ -12,23 +12,33 @@ namespace ControleMercadoria.Application.Services.Reports.Documents
         public IEnumerable<MovementsResponseDTO> Movements { get; set; }
         public IEnumerable<ProductResponseDTO> Products { get; set; }
         public SummaryReportsResponseDTO Summary { get; set; }
+        public ReportPeriodFilterDTO Period { get; set; }
 
         public MovementReportDocument(
             IEnumerable<MovementsResponseDTO> movements,
             IEnumerable<ProductResponseDTO> 
-            products, SummaryReportsResponseDTO summary)
+            products, SummaryReportsResponseDTO summary,
+            ReportPeriodFilterDTO period
+            )
         {
             QuestPDF.Settings.License = LicenseType.Community;
             Movements = movements;
             Products = products;
             Summary = summary;
+            Period = period;
+        }
+
+        public string GetMovementDatesByPeriod()
+        {
+            var period = (Period.dataInicio == null && Period.dataFim == null) ? "todas as movimentações"
+                : Period.dataInicio != null || Period.dataFim != null ? Period.dataInicio + "-" + Period.dataFim : "";
+
+            return period;
         }
         public void Compose(IDocumentContainer container)
         {
             container.Page(page =>
             {
-
-                // Header (Cabeçalho) inicial...
                 page.Header().Background("#1a1a1a").Padding(20).Column(col =>
                 {
 
@@ -37,26 +47,22 @@ namespace ControleMercadoria.Application.Services.Reports.Documents
 
                     col.Item().Row(row =>
                     {
-
                         row.RelativeItem().Text(text =>
                         {
                             text.Span("Período: ").FontColor(Colors.White).FontSize(10);
-                            text.Span("todas as movimentações ").FontColor("#d4a853").FontSize(10);
+                            text.Span($"{GetMovementDatesByPeriod()}")
+                            .FontColor("#d4a853").FontSize(10);
                         });
 
                         row.RelativeItem().AlignRight()
                            .Text($"Emitido em {DateTime.Now:dd/MM/yyyy, HH:mm:ss}")
                            .FontColor(Colors.White).FontSize(10);
-
                     });
                 });
 
-                // Conteudo abaixo....
                 page.Content().Padding(20).Column(col =>
                 {
-                    // resumo finaceiro, lucro, entradas, etc..
                     col.Item().PaddingBottom(8).Text("Resumo financeiro").FontSize(14).Bold();
-
 
                     col.Item().Border(0.5f).BorderColor("#e5e7eb").Table(table =>
                     {
@@ -75,27 +81,32 @@ namespace ControleMercadoria.Application.Services.Reports.Documents
                                 .Text("Valor").FontColor("#d4a853").Bold().FontSize(10);
                         });
 
-                        // Linha 1
-                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4).BorderBottom(0.5f).BorderColor("#e5e7eb")
+                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4)
+                        .BorderBottom(0.5f).BorderColor("#e5e7eb")
                             .Text("Total gasto (entradas)").FontSize(10);
-                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4).BorderBottom(0.5f).BorderColor("#e5e7eb").AlignRight()
+
+                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4)
+                        .BorderBottom(0.5f).BorderColor("#e5e7eb").AlignRight()
                             .Text(Summary.TotalSpent.ToString("C")).FontSize(10);
 
-                        // Linha 2
-                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4).BorderBottom(0.5f).BorderColor("#e5e7eb")
+                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4)
+                        .BorderBottom(0.5f).BorderColor("#e5e7eb")
                             .Text("Total vendido (saídas)").FontSize(10);
-                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4).BorderBottom(0.5f).BorderColor("#e5e7eb").AlignRight()
+
+                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4)
+                        .BorderBottom(0.5f).BorderColor("#e5e7eb").AlignRight()
                             .Text(Summary.TotalSold.ToString("C")).FontSize(10);
 
-                        // Linha 3
-                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4).BorderBottom(0.5f).BorderColor("#e5e7eb")
+                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4)
+                        .BorderBottom(0.5f).BorderColor("#e5e7eb")
                             .Text("Lucro").FontSize(10);
-                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4).BorderBottom(0.5f).BorderColor("#e5e7eb").AlignRight()
+
+                        table.Cell().Background("#e5e7eb").PaddingHorizontal(8).PaddingVertical(4)
+                        .BorderBottom(0.5f).BorderColor("#e5e7eb").AlignRight()
                             .Text(Summary.Profit.ToString("C")).FontSize(10);
 
                     });
 
-                    // Estoque Produto...
                     col.Item().PaddingBottom(8).PaddingTop(15).Text("Estoque por produto").FontSize(14).Bold();
 
                     col.Item().Border(0.5f).BorderColor("#e5e7eb").Table(table =>
@@ -160,7 +171,6 @@ namespace ControleMercadoria.Application.Services.Reports.Documents
 
                     col.Item().Border(0.5f).BorderColor("#e5e7eb").Table(table =>
                     {
-
                         table.ColumnsDefinition(columns =>
                         {
                             columns.RelativeColumn(2); 
@@ -214,8 +224,6 @@ namespace ControleMercadoria.Application.Services.Reports.Documents
                 });
 
             });
-
-
         }
     }
 }

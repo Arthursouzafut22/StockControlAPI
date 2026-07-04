@@ -1,4 +1,5 @@
 ﻿using ControleMercadoria.Application.Services.Reports;
+using ControleMercadoria.Core.DTOs.Reports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -36,12 +37,12 @@ namespace ControleMercadoria.API.Controllers
 
         [Authorize]
         [HttpGet("exportar-pdf")]
-        public async Task<IActionResult> GeneratePDFReport()
+        public async Task<IActionResult> GeneratePDFReport([FromQuery] ReportPeriodFilterDTO dtoFilter)
         {
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var pdf = await _service.GeneratePdf(userId);
+            var pdf = await _service.GeneratePdfByFilter(dtoFilter, userId);
             return File(pdf, "application/pdf", "relatorio.pdf");
-        }
 
+        }
     }
 }
