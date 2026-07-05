@@ -30,8 +30,15 @@ namespace ControleMercadoria.Application.Services.Reports.Documents
 
         public string GetMovementDatesByPeriod()
         {
-            var period = (Period.dataInicio == null && Period.dataFim == null) ? "todas as movimentações"
-                : Period.dataInicio != null || Period.dataFim != null ? Period.dataInicio + "-" + Period.dataFim : "";
+            var period = (Period.dataInicio == null && Period.dataFim == null)
+                ? "todas as movimentações"
+                : Period.dataInicio != null && Period.dataFim != null
+                    ? $"{Period.dataInicio} - {Period.dataFim}"
+                    : Period.dataInicio != null
+                        ? Period.dataInicio
+                        : Period.dataFim != null
+                            ? Period.dataFim
+                            : string.Empty;
 
             return period;
         }
