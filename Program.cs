@@ -20,6 +20,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddCors(options => {
+
+    options.AddPolicy("ReactPolicy", policy => {
+
+        policy
+        .WithOrigins("http://localhost:5174")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    
+    });
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.TagActionsBy(api =>
@@ -87,7 +99,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("ReactPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
