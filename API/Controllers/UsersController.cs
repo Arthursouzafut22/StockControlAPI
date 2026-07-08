@@ -25,6 +25,7 @@ namespace ControleMercadoria.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, new
             {
                 message = "Usuário cadastrado com sucesso!",
+                Success = true,
                 data = user
             });
         }
