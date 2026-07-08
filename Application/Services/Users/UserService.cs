@@ -25,9 +25,9 @@ namespace ControleMercadoria.Application.Services.Users
 
             var user = new UserEntity
             {
-                Nome = dto.Nome,
+                Nome = dto.Name,
                 Email = dto.Email,
-                SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha)
+                SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
 
             await _repository.Create(user);

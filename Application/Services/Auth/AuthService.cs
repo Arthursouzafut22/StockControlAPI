@@ -20,11 +20,11 @@ namespace ControleMercadoria.Application.Services.Auth
 
             if (user == null)
             {
-                BCrypt.Net.BCrypt.Verify(dto.Senha, "$2a$11$5Kfd64N25hXgY.V.3p4j9O");
+                BCrypt.Net.BCrypt.Verify(dto.Password, "$2a$11$5Kfd64N25hXgY.V.3p4j9O");
                 throw new UnauthorizedAccessException("E-mail ou senha inválidos.");
             }
 
-            if (!ToCheckSenha(dto.Senha, user.SenhaHash))
+            if (!ToCheckSenha(dto.Password, user.SenhaHash))
                 throw new UnauthorizedAccessException("E-mail ou senha inválidos.");
 
             var token = _token.GenerateToken(user);

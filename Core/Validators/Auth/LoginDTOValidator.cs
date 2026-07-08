@@ -10,7 +10,7 @@ namespace ControleMercadoria.Core.Validators.Auth
             RuleFor(x => x.Email).NotEmpty().WithMessage("O e-mail é obrigatório.")
                 .EmailAddress().WithMessage("O e-mail informado não é válido.");
 
-            RuleFor(x => x.Senha).NotEmpty().WithMessage("A senha é obrigatória.")
+            RuleFor(x => x.Password).NotEmpty().WithMessage("A senha é obrigatória.")
                 .MinimumLength(6).WithMessage("A senha deve ter pelo menos 6 caracteres.");
         }
     }
