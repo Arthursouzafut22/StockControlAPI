@@ -15,7 +15,12 @@ namespace ControleMercadoria.API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
             var token = await _service.Login(dto);
-            return Ok(new { Acess_token = token });
+
+            return Ok(new LoginResponseDTO(
+                true, 
+                "Login realizado com sucesso!", 
+                token.Token
+             ));
         }
     }
 }
