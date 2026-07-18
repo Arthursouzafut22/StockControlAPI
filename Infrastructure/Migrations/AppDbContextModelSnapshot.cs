@@ -50,7 +50,7 @@ namespace ControleMercadoria.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("ControleMercadoria.Core.Models.Movements.Movement", b =>
@@ -89,7 +89,7 @@ namespace ControleMercadoria.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Movements");
+                    b.ToTable("Movements", (string)null);
                 });
 
             modelBuilder.Entity("ControleMercadoria.Core.Models.Products.Product", b =>
@@ -134,7 +134,7 @@ namespace ControleMercadoria.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ControleMercadoria.Core.Models.Users.User", b =>
@@ -168,7 +168,7 @@ namespace ControleMercadoria.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ControleMercadoria.Core.Models.Auth.RefreshToken", b =>

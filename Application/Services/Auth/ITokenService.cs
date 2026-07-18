@@ -5,5 +5,7 @@ namespace ControleMercadoria.Application.Services.Auth
     public interface ITokenService
     {
         string GenerateToken(UserEntity user);
+        string GenerateRefreshToken();
+
     }
 }

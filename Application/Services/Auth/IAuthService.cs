@@ -6,5 +6,7 @@ namespace ControleMercadoria.Application.Services.Auth
     {
         Task<TokenResponseDTO> Login(LoginDTO dto);
         bool ToCheckSenha(string senha, string hashFromBank);
+        Task<RefreshTokenResponseDTO> RefreshToken(RefreshTokenRequestDTO dto);
+
     }
 }

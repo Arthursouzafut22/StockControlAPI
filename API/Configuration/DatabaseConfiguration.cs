@@ -1,6 +1,5 @@
 ﻿using ControleMercadoria.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ControleMercadoria.API.Configuration
 {
