@@ -7,10 +7,10 @@ namespace ControleMercadoria.Core.DTOs.Products
         string Name,
 
         [property: JsonPropertyName("categoria")]
-        string Category,
+        string? Category,
 
         [property: JsonPropertyName("descricao")]
-        string Description,
+        string? Description,
 
         [property: JsonPropertyName("preco_custo")]
         decimal PriceCost,
