@@ -7,7 +7,7 @@ namespace ControleMercadoria.Core.Validators.Products
     {
         public CreateProductDTOValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage("O nome do produto é obrigatório.");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("O nome do produto é obrigatório..");
 
             RuleFor(x => x.PriceCost).NotEmpty().WithMessage("Preço de custo é obrigatório.")
                 .GreaterThan(0).WithMessage("Preço de custo deve ser maior que zero.")
