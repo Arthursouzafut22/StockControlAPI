@@ -46,7 +46,8 @@ namespace ControleMercadoria.API.Controllers
 
             return StatusCode(201, new
             {
-                message = "Produto cadastrado com sucesso.",
+                Success = true,
+                Message = "Produto cadastrado com sucesso.",
                 Data = createProduct
             });
         }
