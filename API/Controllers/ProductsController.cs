@@ -59,7 +59,12 @@ namespace ControleMercadoria.API.Controllers
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var update = await _service.Update(userId, id, dto);
 
-            return StatusCode(201, new { message = "Produto atualizado com sucesso!", Data = update });
+            return StatusCode(201, new 
+            { 
+                Success = true,
+                message = "Produto atualizado com sucesso!", 
+                Data = update 
+            });
         }
 
         [Authorize]

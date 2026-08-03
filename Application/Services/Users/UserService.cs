@@ -58,9 +58,9 @@ namespace ControleMercadoria.Application.Services.Users
             return new UserResponseDTO(existUser.Id, existUser.Nome, existUser.Email);
         }
 
-        public async Task<UserResponseDTO> FindById(long id, long userIdToken)
+        public async Task<UserResponseDTO> FindById(long id, long userId)
         {
-            if (id != userIdToken)
+            if (id != userId)
                 throw new UnauthorizedAccessException("Você não tem permissão para acessar este recurso.");
 
             var existUser = await _repository.FindById(id);
@@ -71,9 +71,9 @@ namespace ControleMercadoria.Application.Services.Users
             return new UserResponseDTO(existUser.Id, existUser.Nome, existUser.Email);
         }
 
-        public async Task Delete(long id, long userIdToken)
+        public async Task Delete(long id, long userId)
         {
-            if (id != userIdToken)
+            if (id != userId)
                 throw new UnauthorizedAccessException("Você não tem permissão para deletar este recurso.");
 
             var existUser = await _repository.FindById(id);

@@ -46,7 +46,7 @@ namespace ControleMercadoria.Application.Services.Products
             var existProduct = await _repository.FindById(productId);
 
             if (existProduct == null)
-                throw new KeyNotFoundException("Produto não encontrado");
+                throw new KeyNotFoundException("Produto não encontrado.");
 
             if (existProduct.UserId != userId)
                 throw new UnauthorizedAccessException("Você não tem permissão para editar este produto.");
