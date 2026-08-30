@@ -28,7 +28,7 @@ namespace ControleMercadoria.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("entradas")]
+        [HttpGet("entrada")]
         public async Task<IActionResult> GetEntryMovements()
         {
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -48,7 +48,7 @@ namespace ControleMercadoria.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("saidas")]
+        [HttpGet("saida")]
         public async Task<IActionResult> GetExitMovements()
         {
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
