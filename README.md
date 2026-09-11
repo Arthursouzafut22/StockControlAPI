@@ -76,7 +76,7 @@ Repositório de uma **WebAPI** para controle de estoque e fluxo de mercadorias. 
 ## 📸 Screenshot
 
 <div align="center">
-  <img src="https://via.placeholder.com/900x400.png?text=Swagger+UI+-+Stock+Management+API" alt="Swagger UI"/>
+  <img width="1892" height="896" alt="image" src="https://github.com/user-attachments/assets/9dc27a8c-f1a4-4170-9e10-aff3155514c9" />
 </div>
 
 ## 👤 Autor
