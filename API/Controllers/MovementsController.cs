@@ -82,8 +82,8 @@ namespace ControleMercadoria.API.Controllers
             [FromBody] UpdateMovementsDTO dto)
         {
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            await _service.UpdateMovement(id, userId, productId, dto);
-            return Ok();
+            var update = await _service.UpdateMovement(id, userId, productId, dto);
+            return Ok(update);
         }
     }
 }
