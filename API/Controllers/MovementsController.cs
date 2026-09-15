@@ -64,7 +64,11 @@ namespace ControleMercadoria.API.Controllers
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var movementExit = await _service.CreateExitMovement(userId, dto);
 
-            return StatusCode(201, new { message = "Movimentação de saida registrada!", Data = movementExit });
+            return StatusCode(201, new 
+            { 
+                message = "Movimentação de saida registrada!", 
+                Data = movementExit 
+            });
         }
 
         [Authorize]
@@ -83,7 +87,13 @@ namespace ControleMercadoria.API.Controllers
         {
             var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var update = await _service.UpdateMovement(id, userId, productId, dto);
-            return Ok(update);
+
+            return StatusCode(201, new
+            {
+                Success = true,
+                message = "Movimento atualizado com sucesso!",
+                Data = update
+            });
         }
     }
 }
