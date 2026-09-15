@@ -1,7 +1,6 @@
 ﻿using ControleMercadoria.Core.DTOs.Movements;
 using ControleMercadoria.Core.Enums;
 using ControleMercadoria.Core.Models.Movements;
-using ControleMercadoria.Core.Models.Users;
 using ControleMercadoria.Infrastructure.Repository.Movements;
 using ControleMercadoria.Infrastructure.Repository.Products;
 
@@ -170,7 +169,8 @@ namespace ControleMercadoria.Application.Services.Movements
             );
         }
 
-        public async Task UpdateMovement(long id, long userId, long productId, UpdateMovementsDTO dto)
+        public async Task<MovementsResponseDTO> UpdateMovement(long id, long userId,
+            long productId, UpdateMovementsDTO dto)
         {
             var movement = await _repository.FindById(id);
             var product = await _productRepository.FindById(productId);
@@ -179,7 +179,7 @@ namespace ControleMercadoria.Application.Services.Movements
                 throw new KeyNotFoundException(
                     "Movimento não encontrado.");
 
-            if(product == null)
+            if (product == null)
                 throw new KeyNotFoundException(
                     "Produto não encontrado.");
 
@@ -188,11 +188,11 @@ namespace ControleMercadoria.Application.Services.Movements
                     "Você não tem permissão para editar este movimento.");
 
 
-            if(movement.Type == MovementType.ENTRADA)
+            if (movement.Type == MovementType.ENTRADA)
             {
                 var previousQuantityEntry = product!.StockQuantity - movement.Amount;
                 var newInputQuantity = previousQuantityEntry += dto.Amount;
-                product.StockQuantity = newInputQuantity; 
+                product.StockQuantity = newInputQuantity;
             }
 
 
@@ -204,7 +204,7 @@ namespace ControleMercadoria.Application.Services.Movements
                     throw new InvalidOperationException
                         ("Quantidade informada maior que a quantidade do estoque atual.");
 
-                var newOutputQuantity = previousOutflowQuantity -= dto.Amount; 
+                var newOutputQuantity = previousOutflowQuantity -= dto.Amount;
                 product.StockQuantity = newOutputQuantity;
             }
 
@@ -213,8 +213,20 @@ namespace ControleMercadoria.Application.Services.Movements
             movement.Observation = dto.Observation;
 
             await _productRepository.Update(product.Id, product);
-            await _repository.Update(movement.Id, movement);
-           
+            var update = await _repository.Update(movement.Id, movement);
+
+            return new MovementsResponseDTO(
+                update.Id,
+                update.ProductId,
+                product.Name,
+                update.UserId,
+                update.Type,
+                update.Amount,
+                update.UnitValue,
+                update.TotalValue,
+                update.Observation,
+                update.CreatedAt
+            );
         }
 
         public async Task<IEnumerable<MovementsResponseDTO>> GetAll(long userId)
