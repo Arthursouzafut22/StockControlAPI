@@ -13,6 +13,11 @@ using ControleMercadoria.Infrastructure.Repository.Users;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.OpenApi;
+using System.Globalization;
+
+var culturaBR = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = culturaBR;
+CultureInfo.DefaultThreadCurrentUICulture = culturaBR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,15 +26,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddCors(options => {
+builder.Services.AddCors(options =>
+{
 
-    options.AddPolicy("ReactPolicy", policy => {
+    options.AddPolicy("ReactPolicy", policy =>
+    {
 
         policy
         .WithOrigins("http://localhost:5173", "https://fluxo-mercadoria.vercel.app")
         .AllowAnyHeader()
         .AllowAnyMethod();
-    
+
     });
 });
 
