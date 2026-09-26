@@ -1,5 +1,6 @@
 using ControleMercadoria.API.Configuration;
 using ControleMercadoria.Application.Services.Auth;
+using ControleMercadoria.Application.Services.Background;
 using ControleMercadoria.Application.Services.Movements;
 using ControleMercadoria.Application.Services.Products;
 using ControleMercadoria.Application.Services.Reports;
@@ -91,6 +92,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IMovementsRepository, MovementsRepository>();
 builder.Services.AddScoped<IMovementService, MovementService>();
 builder.Services.AddScoped<IReportsService, ReportsService>();
+builder.Services.AddHostedService<KeepDatabaseAlive>();
 
 var secretKey = builder.Configuration["Jwt:SecretKey"];
 
